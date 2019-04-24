@@ -76,7 +76,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="387-0W-2yz">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="387-0W-2yz">
                                 <rect key="frame" x="289" y="53" width="70" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
@@ -87,6 +87,10 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LK0-Tn-luD">
                                 <rect key="frame" x="16" y="752" width="30" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="5xw-dF-GNa" appends="YES" id="MER-9L-BzU"/>
+                                </connections>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.78624409437179565" green="0.90681463479995728" blue="0.94631844758987427" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -95,6 +99,7 @@
                     <navigationItem key="navigationItem" id="Mgn-fP-V8I"/>
                     <connections>
                         <outlet property="collectionView" destination="VjX-ak-4R8" id="DpT-3g-Pth"/>
+                        <outlet property="profileImageView" destination="387-0W-2yz" id="sfd-ac-0Vv"/>
                         <segue destination="qXg-x8-G1s" kind="show" identifier="ShowCloset" id="Ol3-Y3-3IB"/>
                         <segue destination="Hg0-Jq-Ogq" kind="show" identifier="ShowOutfitPlanner" id="1yV-dx-Ph8"/>
                     </connections>
@@ -103,7 +108,7 @@
                 <tapGestureRecognizer id="5xw-dF-GNa">
                     <connections>
                         <action selector="profileImageTapped:" destination="Aw1-hP-ghc" id="EDM-eI-TJm"/>
-                        <segue destination="H3Q-RA-6mE" kind="showDetail" identifier="ShowDetailProfilePage" id="JKt-TU-0zZ"/>
+                        <segue destination="H3Q-RA-6mE" kind="showDetail" identifier="ShowDetailProfilePage" id="2Vv-E1-bB4"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -112,7 +117,6 @@
         <!--View Controller-->
         <scene sceneID="xYt-nM-KrI">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YPW-gz-yBo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Hg0-Jq-Ogq" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Txh-uR-Li4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
@@ -121,13 +125,13 @@
                         <viewLayoutGuide key="safeArea" id="l9A-cI-9NG"/>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YPW-gz-yBo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1970" y="205"/>
         </scene>
         <!--Closet View Controller-->
         <scene sceneID="e6H-rD-Qks">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sNl-cv-LQz" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Ola-re-wKI" customClass="ClosetViewController" customModule="Random_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="elb-38-i5Z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
@@ -157,6 +161,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sNl-cv-LQz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2850" y="-491"/>
         </scene>
@@ -286,6 +291,7 @@
         <image name="closetDoor" width="607" height="1000"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="2Vv-E1-bB4"/>
         <segue reference="r8L-R8-wEx"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -30,6 +30,14 @@ class MyClosetUser {
         self.init(email: user.email ?? "", displayName: user.displayName ?? "", photoURL: (user.photoURL != nil ? "\(user.photoURL!)" : ""), documentID: user.uid)
     }
     
+    convenience init (dictionary: [String: Any]) {
+        let email = dictionary["email"] as! String? ?? ""
+        let displayName = dictionary["displayName"] as! String? ?? ""
+        let photoURL = dictionary["photoURL"] as? String ?? ""
+        self.init(email: email, displayName: displayName, photoURL: photoURL, documentID: "")
+    }
+    
+    
     func saveIfNewUser() {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(documentID)

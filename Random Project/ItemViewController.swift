@@ -10,15 +10,26 @@ import UIKit
 import Firebase
 import FirebaseUI
 import GoogleSignIn
+import SDWebImage
 
 class ItemViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var profileImageView: UIImageView!
     
     let cellScaling: CGFloat = 0.6
     var authUI: FUIAuth!
     var mainItemCellLabelsArray = ["Go To My Closet", "Next Page"]
     var segueIdentifiers = ["ShowCloset", "ShowOutfitPlanner"]
-    var myClosetUser: MyClosetUser!
+    var myClosetUser: MyClosetUser! {
+        didSet {
+            guard let url = URL(string: myClosetUser.photoURL) else {
+                // TODO: Create a standard user profile image to go in here
+                print("*** ERROR: cannot convert photoURL String to a URL")
+                return
+            }
+            profileImageView.sd_setImage(with: url)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +71,14 @@ class ItemViewController: UIViewController {
             myClosetUser.saveIfNewUser()
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowDetailProfilePage" {
+            let destination = segue.destination as! MyClosetUserProfileViewController
+            destination.myClosetUser = myClosetUser
+        }
+    }
+
     @IBAction func profileImageTapped(_ sender: UITapGestureRecognizer) {
         performSegue(withIdentifier: "ShowDetailProfilePage", sender: self)
     }

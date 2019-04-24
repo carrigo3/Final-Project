@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>904961669804-ukbq4ftvehckrvomsvhqurm6drq3sas4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.904961669804-ukbq4ftvehckrvomsvhqurm6drq3sas4</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCAsBr7aq0u2riaH9YvVPP7fpKw37wcOEk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>904961669804</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.arrigo.Random-Project</string>
+	<key>PROJECT_ID</key>
+	<string>laundry-inventory</string>
+	<key>STORAGE_BUCKET</key>
+	<string>laundry-inventory.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:904961669804:ios:969a23ece212eb0f</string>
+	<key>DATABASE_URL</key>
+	<string>https://laundry-inventory.firebaseio.com</string>
+</dict>
+</plist>

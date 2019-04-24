@@ -18,7 +18,7 @@ class ItemViewController: UIViewController {
     
     let cellScaling: CGFloat = 0.6
     var authUI: FUIAuth!
-    var mainItemCellLabelsArray = ["Go To My Closet", "Next Page"]
+    var mainItemCellLabelsArray = ["Go To My Closet", "Next Page", "Test Page 3", "Test Page 4", "Test Page 5"]
     var segueIdentifiers = ["ShowCloset", "ShowOutfitPlanner"]
     var myClosetUser: MyClosetUser! {
         didSet {
@@ -72,12 +72,7 @@ class ItemViewController: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowDetailProfilePage" {
-            let destination = segue.destination as! MyClosetUserProfileViewController
-            destination.myClosetUser = myClosetUser
-        }
-    }
+
 
     @IBAction func profileImageTapped(_ sender: UITapGestureRecognizer) {
         performSegue(withIdentifier: "ShowDetailProfilePage", sender: self)

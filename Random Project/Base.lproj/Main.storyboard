@@ -22,7 +22,7 @@
                                 <rect key="frame" x="8" y="53" width="273" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SnellRoundhand-Bold" family="Snell Roundhand" pointSize="38"/>
-                                <color key="textColor" red="0.080758474767208099" green="0.13695594668388367" blue="0.33034658432006836" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.082352941176470587" green="0.13725490196078433" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M5h-NF-b20">
@@ -76,20 +76,21 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="387-0W-2yz">
-                                <rect key="frame" x="289" y="53" width="70" height="70"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="info" translatesAutoresizingMaskIntoConstraints="NO" id="LK0-Tn-luD">
+                                <rect key="frame" x="16" y="752" width="30" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="5xw-dF-GNa" appends="YES" id="MER-9L-BzU"/>
+                                </connections>
+                            </imageView>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="387-0W-2yz">
+                                <rect key="frame" x="289" y="44" width="70" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="5xw-dF-GNa" appends="YES" id="gZ9-7t-Qqd"/>
-                                </connections>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LK0-Tn-luD">
-                                <rect key="frame" x="16" y="752" width="30" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="5xw-dF-GNa" appends="YES" id="MER-9L-BzU"/>
                                 </connections>
                             </imageView>
                         </subviews>
@@ -108,7 +109,7 @@
                 <tapGestureRecognizer id="5xw-dF-GNa">
                     <connections>
                         <action selector="profileImageTapped:" destination="Aw1-hP-ghc" id="EDM-eI-TJm"/>
-                        <segue destination="H3Q-RA-6mE" kind="showDetail" identifier="ShowDetailProfilePage" id="2Vv-E1-bB4"/>
+                        <segue destination="H3Q-RA-6mE" kind="showDetail" identifier="ShowDetailProfilePage" id="Vyv-fd-hkI"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -289,9 +290,10 @@
     </scenes>
     <resources>
         <image name="closetDoor" width="607" height="1000"/>
+        <image name="info" width="193" height="195"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2Vv-E1-bB4"/>
+        <segue reference="Vyv-fd-hkI"/>
         <segue reference="r8L-R8-wEx"/>
     </inferredMetricsTieBreakers>
 </document>

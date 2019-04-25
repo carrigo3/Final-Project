@@ -12,6 +12,9 @@
 		8E0A059A22543079000B3029 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A059922543079000B3029 /* Assets.xcassets */; };
 		8E0A059D22543079000B3029 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A059B22543079000B3029 /* LaunchScreen.storyboard */; };
 		8EC4DBEF226FB3060027CCA5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EC4DBEE226FB3060027CCA5 /* GoogleService-Info.plist */; };
+		8EEA39D92270ECA4009D1329 /* ClosetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEA39D82270ECA3009D1329 /* ClosetTableViewCell.swift */; };
+		8EEA39DB227111D5009D1329 /* AddNewItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEA39DA227111D5009D1329 /* AddNewItemViewController.swift */; };
+		8EEA39DD227140F7009D1329 /* ClothesItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEA39DC227140F7009D1329 /* ClothesItem.swift */; };
 		8EFFDBDC226FD26B002B1C5B /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFDBDB226FD26B002B1C5B /* ItemViewController.swift */; };
 		8EFFDBDE226FD3B0002B1C5B /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFDBDD226FD3B0002B1C5B /* ItemCollectionViewCell.swift */; };
 		8EFFDBE0226FF9C4002B1C5B /* ClosetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFFDBDF226FF9C4002B1C5B /* ClosetViewController.swift */; };
@@ -31,6 +34,9 @@
 		8E0A059C22543079000B3029 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E0A059E22543079000B3029 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8EC4DBEE226FB3060027CCA5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8EEA39D82270ECA3009D1329 /* ClosetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosetTableViewCell.swift; sourceTree = "<group>"; };
+		8EEA39DA227111D5009D1329 /* AddNewItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewItemViewController.swift; sourceTree = "<group>"; };
+		8EEA39DC227140F7009D1329 /* ClothesItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesItem.swift; sourceTree = "<group>"; };
 		8EFFDBDB226FD26B002B1C5B /* ItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
 		8EFFDBDD226FD3B0002B1C5B /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		8EFFDBDF226FF9C4002B1C5B /* ClosetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosetViewController.swift; sourceTree = "<group>"; };
@@ -83,12 +89,15 @@
 			isa = PBXGroup;
 			children = (
 				8E0A059222543077000B3029 /* AppDelegate.swift */,
+				8EEA39DC227140F7009D1329 /* ClothesItem.swift */,
 				8EFFDBE522701695002B1C5B /* MyClosetUserProfileViewController.swift */,
 				8EFFDBE32270065B002B1C5B /* MyClosetUser.swift */,
 				8EFFDBDB226FD26B002B1C5B /* ItemViewController.swift */,
-				8EFFDBDF226FF9C4002B1C5B /* ClosetViewController.swift */,
-				8EFFDBE1226FFDA9002B1C5B /* OutfitCreatorViewController.swift */,
 				8EFFDBDD226FD3B0002B1C5B /* ItemCollectionViewCell.swift */,
+				8EFFDBDF226FF9C4002B1C5B /* ClosetViewController.swift */,
+				8EEA39D82270ECA3009D1329 /* ClosetTableViewCell.swift */,
+				8EFFDBE1226FFDA9002B1C5B /* OutfitCreatorViewController.swift */,
+				8EEA39DA227111D5009D1329 /* AddNewItemViewController.swift */,
 				8E0A059622543077000B3029 /* Main.storyboard */,
 				8E0A059922543079000B3029 /* Assets.xcassets */,
 				8E0A059B22543079000B3029 /* LaunchScreen.storyboard */,
@@ -279,10 +288,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EFFDBE622701695002B1C5B /* MyClosetUserProfileViewController.swift in Sources */,
+				8EEA39D92270ECA4009D1329 /* ClosetTableViewCell.swift in Sources */,
+				8EEA39DB227111D5009D1329 /* AddNewItemViewController.swift in Sources */,
 				8EFFDBDE226FD3B0002B1C5B /* ItemCollectionViewCell.swift in Sources */,
 				8EFFDBDC226FD26B002B1C5B /* ItemViewController.swift in Sources */,
 				8EFFDBE42270065B002B1C5B /* MyClosetUser.swift in Sources */,
 				8EFFDBE0226FF9C4002B1C5B /* ClosetViewController.swift in Sources */,
+				8EEA39DD227140F7009D1329 /* ClothesItem.swift in Sources */,
 				8EFFDBE2226FFDAA002B1C5B /* OutfitCreatorViewController.swift in Sources */,
 				8E0A059322543077000B3029 /* AppDelegate.swift in Sources */,
 			);

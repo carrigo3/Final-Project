@@ -54,5 +54,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>myCloset will need to access your camera in order to upload a new item.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>myCloset will need to access your photo library in order to upload a new photo.</string>
 </dict>
 </plist>

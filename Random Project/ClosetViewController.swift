@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ClosetViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -14,9 +15,12 @@ class ClosetViewController: UIViewController {
     let minHeight: CGFloat = 100
     
     var cellSpacingHeight: CGFloat = 15
-    var closetOptionsArray = ["Add Item To Closet", "All Clothes", "Clean/Dirty Clothes", "Loaned Out Clothes", "Browse by Section"]
+    // Change below to be all cell information
+    //var closetOptionsArray = ["Add Item To Closet", "All Clothes", "Clean/Dirty Clothes", "Loaned Out Clothes", "Browse by Section"]
     var segueIdentifiers = ["AddNewItem", "ShowAllClothesCollection"]
     var currentUserDocumentID: String!
+    var clothesItems: ClothesItems!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,15 +28,28 @@ class ClosetViewController: UIViewController {
         tableView.dataSource = self
         navigationController?.isToolbarHidden = true
         view.backgroundColor?.withAlphaComponent(0.5)
+        clothesItems = ClothesItems()
+        clothesItems.loadData(currentDocumentID: currentUserDocumentID) {
+            print("***DATA LOADEDDDDDDD")
+            self.tableView.reloadData()
+        }
     }
     
+
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "AddNewItem" {
-            let destination = segue.destination.children[0] as! AddNewItemViewController
+        switch segue.identifier ?? "" {
+        case "AddNewItem" :
+            let destination = segue.destination as! AddNewItemViewController
             let currentDocumentID = currentUserDocumentID
             destination.currentDocumentID = currentDocumentID
-        } else {
-            return
+//        case "ShowAllClothesCollection" :
+//            let navigationController = segue.destination as! UINavigationController
+//            let destination = navigationController.viewControllers.first as! AllClothesViewController
+//            destination.allClothesItemImages = itemImages
+//            destination.currentDocumentID =
+        default :
+            print("*** ERROR: Did not have a segue in ClosetViewController prepare(for segue:)")
         }
     }
     
@@ -46,7 +63,7 @@ class ClosetViewController: UIViewController {
 
 extension ClosetViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return closetOptionsArray.count
+        return clothesItems.clothesItemsArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -65,18 +82,17 @@ extension ClosetViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClosetCell", for: indexPath) as! ClosetTableViewCell
-        cell.closetCellLabel.text = closetOptionsArray[indexPath.section]
+        cell.configureCell(clothesItem: clothesItems.clothesItemsArray[indexPath.section])
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let tableViewHeight = tableView.bounds.height
-        let desiredCellHeight = tableViewHeight/CGFloat(closetOptionsArray.count) - 20
-        return (desiredCellHeight > minHeight ? desiredCellHeight : minHeight)
+        return 110
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: segueIdentifiers[indexPath.section], sender: self)
+        //performSegue(withIdentifier: segueIdentifiers[indexPath.section], sender: self)
+        
     }
     
     

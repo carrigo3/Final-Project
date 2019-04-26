@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import GoogleSignIn
+
 
 class AddNewItemViewController: UIViewController {
     @IBOutlet weak var newItemImageView: UIImageView!
@@ -29,9 +29,11 @@ class AddNewItemViewController: UIViewController {
         super.viewDidLoad()
         sectionPicker.delegate = self
         sectionPicker.dataSource = self
+        datePicker.maximumDate = Date()
         if clothesItem == nil {
             clothesItem = ClothesItem()
             clothesItem.itemSection = sectionsArray[0]
+            
         } //else {
             //to be set up if this view controller is used to edit an item
         //}
@@ -97,11 +99,12 @@ class AddNewItemViewController: UIViewController {
     @IBAction func addImageTapped(_ sender: UITapGestureRecognizer) {
         cameraOrLibraryAlert()
     }
-    @IBAction func datePicked(_ sender: Any) {
+    @IBAction func datePicked(_ sender: UIDatePicker) {
         let date = datePicker.date
         let timeInverval = date.timeIntervalSince1970
         clothesItem.lastWornDate = timeInverval
     }
+    
     @IBAction func statusValueChanged(_ sender: UISegmentedControl) {
         switch statusSegmentController.selectedSegmentIndex {
         case 0:

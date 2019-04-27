@@ -82,6 +82,13 @@ class AddNewItemViewController: UIViewController {
         if nameTextField.text != "" {
             clothesItem.itemName = nameTextField.text!
             clothesItem.itemImage = newItemImageView.image!
+            if clothesItem.itemStatus == "" {
+                clothesItem.itemStatus = "Clean"
+            }
+            if clothesItem.lastWornDate == 0 {
+                let date = Date()
+                clothesItem.lastWornDate = date.timeIntervalSince1970
+            }
             clothesItem.saveData(currentDocumentID: currentDocumentID) { success in
                 if success {
                     self.leaveViewController()

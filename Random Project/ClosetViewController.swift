@@ -11,31 +11,34 @@ import Firebase
 
 class ClosetViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     let minHeight: CGFloat = 100
     
     var cellSpacingHeight: CGFloat = 15
-    // Change below to be all cell information
-    //var closetOptionsArray = ["Add Item To Closet", "All Clothes", "Clean/Dirty Clothes", "Loaned Out Clothes", "Browse by Section"]
-    var segueIdentifiers = ["AddNewItem", "ShowAllClothesCollection"]
     var currentUserDocumentID: String!
     var clothesItems: ClothesItems!
+    var clothesItem: ClothesItem!
+    //var currentClothesItemsArray = [ClothesItem]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableHeaderView = UIView()
+        //searchBar.delegate = self
         navigationController?.isToolbarHidden = true
         view.backgroundColor?.withAlphaComponent(0.5)
         clothesItems = ClothesItems()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         clothesItems.loadData(currentDocumentID: currentUserDocumentID) {
             print("***DATA LOADEDDDDDDD")
             self.tableView.reloadData()
         }
     }
-    
-
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier ?? "" {
@@ -43,11 +46,11 @@ class ClosetViewController: UIViewController {
             let destination = segue.destination as! AddNewItemViewController
             let currentDocumentID = currentUserDocumentID
             destination.currentDocumentID = currentDocumentID
-//        case "ShowAllClothesCollection" :
-//            let navigationController = segue.destination as! UINavigationController
-//            let destination = navigationController.viewControllers.first as! AllClothesViewController
-//            destination.allClothesItemImages = itemImages
-//            destination.currentDocumentID =
+        case "ShowClothesItem" :
+            print("ShowClothesItem segue executed")
+            let destination = segue.destination as! ClothesItemDetailViewController
+            let selectedIndexPath = tableView.indexPathForSelectedRow!
+            destination.clothesItem = clothesItems.clothesItemsArray[selectedIndexPath.section]
         default :
             print("*** ERROR: Did not have a segue in ClosetViewController prepare(for segue:)")
         }
@@ -91,9 +94,44 @@ extension ClosetViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //performSegue(withIdentifier: segueIdentifiers[indexPath.section], sender: self)
         
     }
-    
-    
 }
+
+//extension ClosetViewController: UISearchBarDelegate {
+//
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        guard !searchText.isEmpty else {
+//            currentClothesItemsArray = clothesItems.clothesItemsArray
+//            tableView.reloadData()
+//            return
+//        }
+//        currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
+//            return clothesItem.itemName.lowercased().contains(searchText.lowercased())
+//        })
+//        tableView.reloadData()
+//    }
+//
+//    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+//        switch selectedScope {
+//        case 0:
+//            currentClothesItemsArray = clothesItems.clothesItemsArray
+//        case 1:
+//            currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
+//                clothesItem.itemStatus == "Clean"
+//            })
+//        case 2:
+//            currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
+//                clothesItem.itemStatus == "Dirty"
+//            })
+//        case 3:
+//            currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
+//                clothesItem.itemStatus == "Loaned Out"
+//            })
+//        default:
+//            print("I have absolutely no idea how you got here, but congratulations")
+//            return
+//        }
+//        tableView.reloadData()
+//    }
+//}

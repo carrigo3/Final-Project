@@ -26,26 +26,32 @@ class ClosetTableViewCell: UITableViewCell {
         self.clipsToBounds = false
     }
     
+    func formatDate(timeInterval: TimeInterval) -> String {
+        let usableDate = Date(timeIntervalSince1970: timeInterval)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy"
+        return dateFormatter.string(from: usableDate)
+    }
+    
+    func formatStatusLabel(clothesItme: ClothesItem) {
+        switch clothesItme.itemStatus {
+        case "Clean" :
+            itemStatusLabel.textColor = UIColor.green
+            itemStatusLabel.text = clothesItme.itemStatus
+        case "Dirty", "Loaned Out" :
+            itemStatusLabel.textColor = UIColor.red
+            itemStatusLabel.text = clothesItme.itemStatus
+        default:
+            print("*** ERROR: Something went wrong here.")
+        }
+    }
+    
     func configureCell(clothesItem: ClothesItem) {
         itemNameLabel.text = clothesItem.itemName
         itemSectionLabel.text = clothesItem.itemSection
         itemImageView.image = clothesItem.itemImage
-        print(clothesItem.lastWornDate)
-        //itemLastWornLabel.text = clothesItem.lastWornDate
-        switch clothesItem.itemStatus {
-        case "Clean" :
-            itemStatusLabel.textColor = UIColor.green
-            itemStatusLabel.text = clothesItem.itemStatus
-        case "Dirty" :
-            itemStatusLabel.textColor = UIColor.red
-            itemStatusLabel.text = clothesItem.itemStatus
-        case "Loaned Out" :
-            itemStatusLabel.textColor = UIColor.red
-            itemStatusLabel.text = clothesItem.itemStatus
-        default:
-            print("*** ERROR: Something went wrong here.")
-        }
-        
+        itemLastWornLabel.text = formatDate(timeInterval: clothesItem.lastWornDate)
+        formatStatusLabel(clothesItme: clothesItem)
     }
     
 

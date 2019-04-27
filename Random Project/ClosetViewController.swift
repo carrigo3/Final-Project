@@ -18,26 +18,24 @@ class ClosetViewController: UIViewController {
     var cellSpacingHeight: CGFloat = 15
     var currentUserDocumentID: String!
     var clothesItems: ClothesItems!
-    //var clothesItem: ClothesItem!
-    //var currentClothesItemsArray = [ClothesItem]()
+    var currentClothesItemsArray = [ClothesItem]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        //searchBar.delegate = self
+        searchBar.delegate = self
         navigationController?.isToolbarHidden = true
         view.backgroundColor?.withAlphaComponent(0.5)
         clothesItems = ClothesItems()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         clothesItems.loadData(currentDocumentID: currentUserDocumentID) {
             print("***DATA LOADEDDDDDDD")
+            self.currentClothesItemsArray = self.clothesItems.clothesItemsArray
             self.tableView.reloadData()
         }
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier ?? "" {
@@ -65,7 +63,7 @@ class ClosetViewController: UIViewController {
 
 extension ClosetViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return clothesItems.clothesItemsArray.count
+        return currentClothesItemsArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -84,53 +82,50 @@ extension ClosetViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClosetCell", for: indexPath) as! ClosetTableViewCell
-        cell.configureCell(clothesItem: clothesItems.clothesItemsArray[indexPath.section])
+        cell.configureCell(clothesItem: currentClothesItemsArray[indexPath.section])
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 110
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
+
 }
 
-//extension ClosetViewController: UISearchBarDelegate {
-//
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        guard !searchText.isEmpty else {
-//            currentClothesItemsArray = clothesItems.clothesItemsArray
-//            tableView.reloadData()
-//            return
-//        }
-//        currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
-//            return clothesItem.itemName.lowercased().contains(searchText.lowercased())
-//        })
-//        tableView.reloadData()
-//    }
-//
-//    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-//        switch selectedScope {
-//        case 0:
-//            currentClothesItemsArray = clothesItems.clothesItemsArray
-//        case 1:
-//            currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
-//                clothesItem.itemStatus == "Clean"
-//            })
-//        case 2:
-//            currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
-//                clothesItem.itemStatus == "Dirty"
-//            })
-//        case 3:
-//            currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
-//                clothesItem.itemStatus == "Loaned Out"
-//            })
-//        default:
-//            print("I have absolutely no idea how you got here, but congratulations")
-//            return
-//        }
-//        tableView.reloadData()
-//    }
-//}
+extension ClosetViewController: UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+            currentClothesItemsArray = clothesItems.clothesItemsArray
+            tableView.reloadData()
+            return
+        }
+        currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
+            return clothesItem.itemName.lowercased().contains(searchText.lowercased())
+        })
+        tableView.reloadData()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        switch selectedScope {
+        case 0:
+            currentClothesItemsArray = clothesItems.clothesItemsArray
+        case 1:
+            currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
+                clothesItem.itemStatus == "Clean"
+            })
+        case 2:
+            currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
+                clothesItem.itemStatus == "Dirty"
+            })
+        case 3:
+            currentClothesItemsArray = clothesItems.clothesItemsArray.filter({ (clothesItem) -> Bool in
+                clothesItem.itemStatus == "Loaned Out"
+            })
+        default:
+            print("I have absolutely no idea how you got here, but congratulations")
+            return
+        }
+        tableView.reloadData()
+    }
+}

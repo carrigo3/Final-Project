@@ -18,7 +18,7 @@ class ClosetViewController: UIViewController {
     var cellSpacingHeight: CGFloat = 15
     var currentUserDocumentID: String!
     var clothesItems: ClothesItems!
-    var clothesItem: ClothesItem!
+    //var clothesItem: ClothesItem!
     //var currentClothesItemsArray = [ClothesItem]()
     
     
@@ -26,7 +26,6 @@ class ClosetViewController: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.tableHeaderView = UIView()
         //searchBar.delegate = self
         navigationController?.isToolbarHidden = true
         view.backgroundColor?.withAlphaComponent(0.5)

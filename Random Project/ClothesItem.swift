@@ -43,6 +43,16 @@ class ClothesItem {
         self.init(itemName: itemName, itemSection: itemSection, lastWornDate: lastWornDate, itemStatus: itemStatus, itemImage: UIImage(), documentUUID: "")
    }
     
+    func updateItemStatuses(currentUser: MyClosetUser, completed: @escaping () -> ()) {
+        let db = Firestore.firestore()
+        let dataToSave: [String: Any] = self.dictionary
+        db.collection("users").document(currentUser.documentID).collection("clothes").document(documentUUID).setData(dataToSave) { (error) in
+            if let error = error {
+                print("😡 ERROR: \(error.localizedDescription), could not save data for \(self.documentUUID)")
+            }
+        }
+    }
+    
     func saveData(currentUser: MyClosetUser, completed: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
         let storage = Storage.storage()

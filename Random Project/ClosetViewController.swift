@@ -55,6 +55,32 @@ class ClosetViewController: UIViewController {
         }
     }
     
+    func justDidLaundry() {
+        for clothesItem in clothesItems.clothesItemsArray {
+            if clothesItem.itemStatus == "Dirty" {
+                clothesItem.itemStatus = "Clean"
+                clothesItem.updateItemStatuses(currentUser: currentUser) {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "OK", style: .default, handler: { action in
+            self.justDidLaundry()
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(alertAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func justDidLaundryButtonPressed(_ sender: UIButton) {
+        showAlert(title: "Laundry done?", message: "Do you want to set the status of all clean clothes to dirty?")
+    }
+    
     
     @IBAction func backButtonPressed(_ sender: UIBarButtonItem) {
          performSegue(withIdentifier: "BackFromCloset", sender: self)

@@ -36,7 +36,7 @@ class MyClosetUserProfileViewController: UIViewController {
     }
     
     @IBAction func backButtonPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: "ReturnToItemCollectionView", sender: self)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func signOutPressed(_ sender: UIButton) {

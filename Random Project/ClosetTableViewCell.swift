@@ -33,14 +33,14 @@ class ClosetTableViewCell: UITableViewCell {
         return dateFormatter.string(from: usableDate)
     }
     
-    func formatStatusLabel(clothesItme: ClothesItem) {
-        switch clothesItme.itemStatus {
+    func formatStatusLabel(clothesItem: ClothesItem) {
+        switch clothesItem.itemStatus {
         case "Clean" :
             itemStatusLabel.textColor = UIColor.green
-            itemStatusLabel.text = clothesItme.itemStatus
+            itemStatusLabel.text = clothesItem.itemStatus
         case "Dirty", "Loaned Out" :
             itemStatusLabel.textColor = UIColor.red
-            itemStatusLabel.text = clothesItme.itemStatus
+            itemStatusLabel.text = clothesItem.itemStatus
         default:
             print("*** ERROR: Something went wrong here.")
         }
@@ -51,7 +51,7 @@ class ClosetTableViewCell: UITableViewCell {
         itemSectionLabel.text = clothesItem.itemSection
         itemImageView.image = clothesItem.itemImage
         itemLastWornLabel.text = formatDate(timeInterval: clothesItem.lastWornDate)
-        formatStatusLabel(clothesItme: clothesItem)
+        formatStatusLabel(clothesItem: clothesItem)
     }
     
 

@@ -19,6 +19,7 @@ class AddNewItemViewController: UIViewController {
     @IBOutlet weak var editImageButton: UIButton!
     @IBOutlet weak var statusSegmentController: UISegmentedControl!
     @IBOutlet weak var saveBarButton: UIBarButtonItem!
+    @IBOutlet weak var deleteItemButton: UIButton!
     
     //TODO: Add custom sections
     var sectionsArray: [String]!
@@ -88,6 +89,7 @@ class AddNewItemViewController: UIViewController {
         saveBarButton.title = "Update"
         tapToAddImageLabel.isHidden = true
         editImageButton.isHidden = false
+        deleteItemButton.isHidden = false
         nameTextField.text = clothesItem!.itemName
         newItemImageView.image = clothesItem!.itemImage
         datePicker.setDate(Date(timeIntervalSince1970: clothesItem!.lastWornDate), animated: false)
@@ -109,7 +111,16 @@ class AddNewItemViewController: UIViewController {
     }
 
 
-
+    @IBAction func deleteItemButtonPressed(_ sender: UIButton) {
+        clothesItem.deleteData(currentUser: currentUser) { (success) in
+            if success {
+                self.performSegue(withIdentifier: "BackToClothesItem", sender: self)
+            } else {
+                print("*** ERROR: Could not leave the view controller because the item was not deleted.")
+            }
+        }
+    }
+    
     @IBAction func editImagePressed(_ sender: UIButton) {
         cameraOrLibraryAlert()
     }

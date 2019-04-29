@@ -18,18 +18,19 @@ class ItemViewController: UIViewController {
     
     let cellScaling: CGFloat = 0.6
     var authUI: FUIAuth!
-    var mainItemCellLabelsArray = ["Go To My Closet", "Next Page"]
-    var segueIdentifiers = ["ShowCloset", "ShowOutfitPlanner"]
-    var myClosetUser: MyClosetUser! {
-        didSet {
-            guard let url = URL(string: myClosetUser.photoURL) else {
-                // TODO: Create a standard user profile image to go in here
-                print("*** ERROR: cannot convert photoURL String to a URL")
-                return
-            }
-            profileImageView.sd_setImage(with: url)
-        }
-    }
+    var mainItemCellLabelsArray = ["View My Closet", "ViewProfile", "About MyCloset"]
+    var segueIdentifiers = ["ShowCloset", "ShowDetailProfilePage", "ShowAboutPage"]
+    var myClosetUser: MyClosetUser!
+//    {
+//        didSet {
+//            guard let url = URL(string: myClosetUser.photoURL) else {
+//                // TODO: Create a standard user profile image to go in here
+//                print("*** ERROR: cannot convert photoURL String to a URL")
+//                return
+//            }
+//            profileImageView.sd_setImage(with: url)
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,11 +75,14 @@ class ItemViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Add a switch case statement if you need another segue
-        if segue.identifier == "ShowCloset" {
+        switch segue.identifier ?? "" {
+        case "ShowCloset":
             let destination = segue.destination.children[0] as! ClosetViewController
             destination.currentUser = myClosetUser
-        } else {
-            // Add segue data passed for OutfitCreatorViewController here "ShowOutfitPlanner"
+        case "ShowOutfitPlanner" :
+            let destination = segue.destination.children[0] as! OutfitCreatorViewController
+            destination.currentUser = myClosetUser
+        default:
             return
         }
     }
@@ -94,9 +98,11 @@ extension ItemViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return mainItemCellLabelsArray.count
     }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCell", for: indexPath) as! ItemCollectionViewCell
         cell.cellTitleLabel.text = mainItemCellLabelsArray[indexPath.row]

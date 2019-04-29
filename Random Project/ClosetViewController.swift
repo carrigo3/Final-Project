@@ -83,7 +83,7 @@ class ClosetViewController: UIViewController {
     
     
     @IBAction func backButtonPressed(_ sender: UIBarButtonItem) {
-         performSegue(withIdentifier: "BackFromCloset", sender: self)
+         performSegue(withIdentifier: "BackToItemView", sender: self)
     }
     
     

@@ -1,12 +1,13 @@
+//////
+//////  AllClothesViewController.swift
+//////  Random Project
+//////
+//////  Created by Cameron Arrigo on 4/25/19.
+//////  Copyright © 2019 Cameron Arrigo. All rights reserved.
+//////
 ////
-////  AllClothesViewController.swift
-////  Random Project
-////
-////  Created by Cameron Arrigo on 4/25/19.
-////  Copyright © 2019 Cameron Arrigo. All rights reserved.
-////
-//
 //import UIKit
+//import Firebase
 //
 //class AllClothesViewController: UIViewController {
 //    @IBOutlet weak var collectionView: UICollectionView!
@@ -21,15 +22,15 @@
 //
 //    }
 //
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "BackToCloset" {
-//            let destination = segue.destination.children[0] as! ClosetViewController
-//            destination.currentUserDocumentID = currentDocumentID
-//        } else {
-//            return
-//        }
-//    }
-//
+////    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+////        if segue.identifier == "BackToCloset" {
+////            let destination = segue.destination.children[0] as! ClosetViewController
+////            destination.currentUserDocumentID = currentDocumentID
+////        } else {
+////            return
+////        }
+////    }
+////
 //    @IBAction func backButtonPressed(_ sender: UIBarButtonItem) {
 //        performSegue(withIdentifier: "BackToCloset", sender: self)
 //    }

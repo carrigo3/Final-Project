@@ -128,6 +128,7 @@ class AddNewItemViewController: UIViewController {
         leaveViewController()
     }
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+        saveBarButton.isEnabled = false
         if saveBarButton.title == "Save" {
             if nameTextField.text != "" {
                 clothesItem.itemName = nameTextField.text!
@@ -141,7 +142,8 @@ class AddNewItemViewController: UIViewController {
                 }
                 clothesItem.saveData(currentUser: currentUser) { success in
                     if success {
-                        self.leaveViewController()
+                        self.performSegue(withIdentifier: "BackToClothesItem", sender: nil)
+                        //self.leaveViewController()
                     } else {
                         print("*** ERROR: Couldn't leave this view controller because data wasn't saved")
                     }

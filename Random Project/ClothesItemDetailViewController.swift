@@ -17,10 +17,20 @@ class ClothesItemDetailViewController: UIViewController {
     @IBOutlet weak var lastWornDateLabel: UILabel!
     
     var clothesItem: ClothesItem!
+    var currentUser: MyClosetUser!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUserInterface()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EditClothesItem" {
+            let destination = segue.destination as! AddNewItemViewController
+            destination.clothesItem = clothesItem
+            destination.currentUser = currentUser
+        }
     }
 
     func updateUserInterface() {
@@ -52,6 +62,7 @@ class ClothesItemDetailViewController: UIViewController {
     }
 
     @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
+        
     }
     
 }

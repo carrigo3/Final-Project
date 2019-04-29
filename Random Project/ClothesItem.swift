@@ -43,9 +43,29 @@ class ClothesItem {
         self.init(itemName: itemName, itemSection: itemSection, lastWornDate: lastWornDate, itemStatus: itemStatus, itemImage: UIImage(), documentUUID: "")
    }
     
-    func saveData(currentDocumentID: String, completed: @escaping (Bool) -> ()) {
+    func saveData(currentUser: MyClosetUser, completed: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
         let storage = Storage.storage()
+        if documentUUID != "" {
+            db.collection("users").document(currentUser.documentID).collection("clothes").document(self.documentUUID).delete() { error in
+                if let error = error {
+                    print("Error removing document with UUID \(self.documentUUID), ERROR: \(error.localizedDescription)")
+                } else {
+                    print("Document successfully removed!")
+                }
+            }
+            let storageRef = storage.reference().child(currentUser.documentID)
+            let clotheImageRef = storageRef.child(documentUUID)
+            clotheImageRef.delete { (error) in
+                if let error = error {
+                    print("*** ERROR: Error deleting image from storage. Error: \(error)")
+                    // Uh-oh, an error occurred!
+                } else {
+                    print("*** File successfully deleted")
+                    // File deleted successfully
+                }
+            }
+        }
         //convert photo.image to a data type so it can be saved by Firebase Storage
         guard let photoData = self.itemImage.jpegData(compressionQuality: 0.5) else {
             print("*** ERROR: could not convert image to data format")
@@ -55,7 +75,7 @@ class ClothesItem {
         uploadMetadata.contentType = "image/jpeg"
         documentUUID = UUID().uuidString //Generate a unique ID to use for the photo image's name
         // create a ref to upload storage to spot.documentID's folder (bucket), with the name we created.
-        let storageRef = storage.reference().child(currentDocumentID).child(self.documentUUID)
+        let storageRef = storage.reference().child(currentUser.documentID).child(self.documentUUID)
         let uploadTask = storageRef.putData(photoData, metadata: uploadMetadata)
         {metadata, error in
             guard error == nil else {
@@ -66,10 +86,10 @@ class ClothesItem {
         uploadTask.observe(.success) { (snapshot) in
             let dataToSave = self.dictionary
             // This will either create a new doc at documentUUID or update the existing doc with that name
-            let ref = db.collection("users").document(currentDocumentID).collection("clothes").document(self.documentUUID)
+            let ref = db.collection("users").document(currentUser.documentID).collection("clothes").document(self.documentUUID)
             ref.setData(dataToSave) { (error) in
                 if let error = error {
-                    print("*** ERROR: updating document \(self.documentUUID) in spot \(currentDocumentID) \(error.localizedDescription)")
+                    print("*** ERROR: updating document \(self.documentUUID) in spot \(currentUser.documentID) \(error.localizedDescription)")
                     completed(false)
                 } else {
                     print("^^^ Document updated with ref ID \(ref.documentID)")
@@ -80,9 +100,51 @@ class ClothesItem {
         }
         uploadTask.observe(.failure) { (snapshot) in
             if let error = snapshot.error {
-                print("*** ERROR: upload task for file \(self.documentUUID) failed, in spot \(currentDocumentID) Error: \(error.localizedDescription)")
+                print("*** ERROR: upload task for file \(self.documentUUID) failed, in spot \(currentUser.documentID) Error: \(error.localizedDescription)")
             }
             return completed(false)
         }
     }
+//    func saveData(currentUser: MyClosetUser, completed: @escaping (Bool) -> ()) {
+//        let db = Firestore.firestore()
+//        let storage = Storage.storage()
+//        //convert photo.image to a data type so it can be saved by Firebase Storage
+//        guard let photoData = self.itemImage.jpegData(compressionQuality: 0.5) else {
+//            print("*** ERROR: could not convert image to data format")
+//            return completed(false)
+//        }
+//        let uploadMetadata = StorageMetadata()
+//        uploadMetadata.contentType = "image/jpeg"
+//        documentUUID = UUID().uuidString //Generate a unique ID to use for the photo image's name
+//        // create a ref to upload storage to spot.documentID's folder (bucket), with the name we created.
+//        let storageRef = storage.reference().child(currentUser.documentID).child(self.documentUUID)
+//        let uploadTask = storageRef.putData(photoData, metadata: uploadMetadata)
+//        {metadata, error in
+//            guard error == nil else {
+//                print("*** ERROR: Error during .putData storage upload for \(storageRef). Error: \(error!.localizedDescription)")
+//                return
+//            }
+//        }
+//        uploadTask.observe(.success) { (snapshot) in
+//            let dataToSave = self.dictionary
+//            // This will either create a new doc at documentUUID or update the existing doc with that name
+//            let ref = db.collection("users").document(currentUser.documentID).collection("clothes").document(self.documentUUID)
+//            ref.setData(dataToSave) { (error) in
+//                if let error = error {
+//                    print("*** ERROR: updating document \(self.documentUUID) in spot \(currentUser.documentID) \(error.localizedDescription)")
+//                    completed(false)
+//                } else {
+//                    print("^^^ Document updated with ref ID \(ref.documentID)")
+//                    print("\(String(describing: self.dictionary["coordinate"]))")
+//                    completed(true)
+//                }
+//            }
+//        }
+//        uploadTask.observe(.failure) { (snapshot) in
+//            if let error = snapshot.error {
+//                print("*** ERROR: upload task for file \(self.documentUUID) failed, in spot \(currentUser.documentID) Error: \(error.localizedDescription)")
+//            }
+//            return completed(false)
+//        }
+//    }
 }

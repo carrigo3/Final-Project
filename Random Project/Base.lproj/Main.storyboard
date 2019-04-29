@@ -125,7 +125,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YPW-gz-yBo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1970" y="205"/>
+            <point key="canvasLocation" x="1970" y="239"/>
         </scene>
         <!--Closet View Controller-->
         <scene sceneID="e6H-rD-Qks">
@@ -297,7 +297,7 @@
             <objects>
                 <viewController id="Ake-LO-0Hh" customClass="ClothesItemDetailViewController" customModule="Random_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="raD-aE-HOD">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="shirt" translatesAutoresizingMaskIntoConstraints="NO" id="sEu-4p-QnH">
@@ -370,6 +370,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="d7c-0t-gDw">
                             <connections>
                                 <action selector="editButtonPressed:" destination="Ake-LO-0Hh" id="Dye-LL-vsz"/>
+                                <segue destination="Xs6-0S-o88" kind="presentation" identifier="EditClothesItem" id="pkW-lL-ftP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -383,7 +384,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ODf-uo-hgL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4008.8000000000002" y="-491.37931034482762"/>
+            <point key="canvasLocation" x="4145" y="-465"/>
         </scene>
         <!--Add New Item View Controller-->
         <scene sceneID="Fgz-9h-vJ8">
@@ -415,7 +416,7 @@
                                                                         <action selector="cancelButtonPressed:" destination="Xs6-0S-o88" id="sKT-1v-B4K"/>
                                                                     </connections>
                                                                 </barButtonItem>
-                                                                <barButtonItem key="rightBarButtonItem" systemItem="save" id="46X-Xb-3u0">
+                                                                <barButtonItem key="rightBarButtonItem" title="Save" id="46X-Xb-3u0">
                                                                     <color key="tintColor" red="0.08235294118" green="0.13725490200000001" blue="0.3294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <connections>
                                                                         <action selector="saveButtonPressed:" destination="Xs6-0S-o88" id="KVk-b9-kAG"/>
@@ -635,9 +636,11 @@
                         <outlet property="editImageButton" destination="LuM-Ou-KGd" id="5My-Qy-JU9"/>
                         <outlet property="nameTextField" destination="61e-zO-40g" id="Yrx-7n-4Y5"/>
                         <outlet property="newItemImageView" destination="fUg-9t-zaX" id="gCa-b1-bKg"/>
+                        <outlet property="saveBarButton" destination="46X-Xb-3u0" id="a07-4Z-q4b"/>
                         <outlet property="sectionPicker" destination="aH2-DS-AsG" id="l80-1U-ICn"/>
                         <outlet property="statusSegmentController" destination="uBG-rr-bG8" id="K0t-4U-NiV"/>
                         <outlet property="tapToAddImageLabel" destination="WE8-bx-fWm" id="kQ6-Vf-Jpi"/>
+                        <segue destination="qXg-x8-G1s" kind="show" identifier="BackToClothesItem" id="z3c-c6-aKI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aQ2-p5-gM2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -781,6 +784,8 @@
         <image name="shirt" width="334" height="278"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="z3c-c6-aKI"/>
+        <segue reference="pkW-lL-ftP"/>
         <segue reference="yrV-uu-YPY"/>
     </inferredMetricsTieBreakers>
 </document>

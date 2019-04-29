@@ -17,24 +17,23 @@ class ClothesItems {
         db = Firestore.firestore()
     }
     
-    func loadData(currentDocumentID: String, completed: @escaping () -> ()) {
-        guard currentDocumentID != "" else {
+    func loadData(currentUser: MyClosetUser, completed: @escaping () -> ()) {
+        guard currentUser.documentID != "" else {
             return
         }
         let storage = Storage.storage()
-        db.collection("users").document(currentDocumentID).collection("clothes").addSnapshotListener { (querySnapshot, error) in
+        db.collection("users").document(currentUser.documentID).collection("clothes").addSnapshotListener { (querySnapshot, error) in
             guard error == nil else {
                 print("*** ERROR: adding the snapshpot listener \(error!.localizedDescription)")
                 return completed()
             }
             self.clothesItemsArray = []
             var loadAttempts = 0
-            let storageRef = storage.reference().child(currentDocumentID)
+            let storageRef = storage.reference().child(currentUser.documentID)
             for document in querySnapshot!.documents {
                 let clothesItem = ClothesItem(dictionary: document.data())
                 clothesItem.documentUUID = document.documentID
                 self.clothesItemsArray.append(clothesItem)
-                
                 let clothesItemRef = storageRef.child(clothesItem.documentUUID)
                 clothesItemRef.getData(maxSize: 25 * 1025 * 1025) { data, error in
                     if let error = error {

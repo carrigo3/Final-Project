@@ -18,12 +18,13 @@ class AddNewItemViewController: UIViewController {
     @IBOutlet weak var tapToAddImageLabel: UILabel!
     @IBOutlet weak var editImageButton: UIButton!
     @IBOutlet weak var statusSegmentController: UISegmentedControl!
+    @IBOutlet weak var saveBarButton: UIBarButtonItem!
     
     //TODO: Add custom sections
-    var sectionsArray = ["T-Shirt", "Dress Shirt", "Pants", "Sweatpants", "Sweatshirt","Shoes", "Sneakers", "Jacket"]
+    var sectionsArray: [String]!
     var clothesItem: ClothesItem!
     var imagePicker = UIImagePickerController()
-    var currentDocumentID: String!
+    var currentUser: MyClosetUser!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,18 +33,30 @@ class AddNewItemViewController: UIViewController {
         datePicker.maximumDate = Date()
         if clothesItem == nil {
             clothesItem = ClothesItem()
+            sectionsArray = ["T-Shirt", "Dress Shirt", "Pants", "Sweatpants", "Sweatshirt", "Shoes", "Sneakers", "Jacket"]
             clothesItem.itemSection = sectionsArray[0]
-            
-        } //else {
-            //to be set up if this view controller is used to edit an item
-        //}
+        } else {
+            sectionsArray = ["T-Shirt", "Dress Shirt", "Pants", "Sweatpants", "Sweatshirt", "Shoes", "Sneakers", "Jacket"]
+            setUpExistingClothesItem()
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "BackToClothesItem" {
+            let destination = segue.destination.children[0] as! ClosetViewController
+            destination.currentUser = currentUser
+        } else {
+            return
+        }
     }
     
     func leaveViewController() {
         let isPresentingInAddMode = presentingViewController is UINavigationController
         if isPresentingInAddMode {
+            print(" *** Was presenting in add mode then dismissed")
             dismiss(animated: true, completion: nil)
         } else {
+            print(" *** Popped view comtroller")
             navigationController?.popViewController(animated: true)
         }
     }
@@ -70,6 +83,31 @@ class AddNewItemViewController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+    func setUpExistingClothesItem() {
+        print("setUpExistingClothesItem() called.")
+        saveBarButton.title = "Update"
+        tapToAddImageLabel.isHidden = true
+        editImageButton.isHidden = false
+        nameTextField.text = clothesItem!.itemName
+        newItemImageView.image = clothesItem!.itemImage
+        datePicker.setDate(Date(timeIntervalSince1970: clothesItem!.lastWornDate), animated: false)
+        for index in 0..<sectionsArray.count {
+            if clothesItem!.itemSection == sectionsArray[index] {
+                sectionPicker.selectRow(index, inComponent: 0, animated: false)
+            }
+        }
+        switch clothesItem!.itemStatus {
+        case "Clean":
+            statusSegmentController.selectedSegmentIndex = 0
+        case "Dirty":
+            statusSegmentController.selectedSegmentIndex = 1
+        case "Loaned Out":
+            statusSegmentController.selectedSegmentIndex = 2
+        default:
+            return
+        }
+    }
+
 
 
     @IBAction func editImagePressed(_ sender: UIButton) {
@@ -79,29 +117,50 @@ class AddNewItemViewController: UIViewController {
         leaveViewController()
     }
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
-        if nameTextField.text != "" {
-            clothesItem.itemName = nameTextField.text!
-            clothesItem.itemImage = newItemImageView.image!
-            if clothesItem.itemStatus == "" {
-                clothesItem.itemStatus = "Clean"
-            }
-            if clothesItem.lastWornDate == 0 {
-                let date = Date()
-                clothesItem.lastWornDate = date.timeIntervalSince1970
-            }
-            clothesItem.saveData(currentDocumentID: currentDocumentID) { success in
-                if success {
-                    self.leaveViewController()
-                } else {
-                    print("*** ERROR: Couldn't leave this view controller because data wasn't saved")
+        if saveBarButton.title == "Save" {
+            if nameTextField.text != "" {
+                clothesItem.itemName = nameTextField.text!
+                clothesItem.itemImage = newItemImageView.image!
+                if clothesItem.itemStatus == "" {
+                    clothesItem.itemStatus = "Clean"
                 }
+                if clothesItem.lastWornDate == 0 {
+                    let date = Date()
+                    clothesItem.lastWornDate = date.timeIntervalSince1970
+                }
+                clothesItem.saveData(currentUser: currentUser) { success in
+                    if success {
+                        self.leaveViewController()
+                    } else {
+                        print("*** ERROR: Couldn't leave this view controller because data wasn't saved")
+                    }
+                }
+            } else {
+                showAlert(title: "Cannot Save Item", message: "You must give your new clothes item a name in order to save it.")
             }
         } else {
-            showAlert(title: "Cannot Save Item", message: "You must give your new clothes item a name in order to save it.")
+            if nameTextField.text != "" {
+                clothesItem.itemName = nameTextField.text!
+                clothesItem.itemImage = newItemImageView.image!
+                if clothesItem.itemStatus == "" {
+                    clothesItem.itemStatus = "Clean"
+                }
+                if clothesItem.lastWornDate == 0 {
+                    let date = Date()
+                    clothesItem.lastWornDate = date.timeIntervalSince1970
+                }
+                clothesItem.saveData(currentUser: currentUser) { success in
+                    if success {
+                        self.performSegue(withIdentifier: "BackToClothesItem", sender: nil)
+                    } else {
+                        print("*** ERROR: Couldn't leave this view controller because data wasn't saved")
+                    }
+                }
+            } else {
+                showAlert(title: "Cannot Save Item", message: "You must give your new clothes item a name in order to save it.")
+            }
         }
 
-        
-        
     }
     @IBAction func addImageTapped(_ sender: UITapGestureRecognizer) {
         cameraOrLibraryAlert()

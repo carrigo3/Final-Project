@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ItemViewController.swift
 //  Random Project
 //
 //  Created by Cameron Arrigo on 4/23/19.
@@ -73,11 +73,12 @@ class ItemViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Add a switch case statement if you need another segue
         if segue.identifier == "ShowCloset" {
             let destination = segue.destination.children[0] as! ClosetViewController
-            let currentUserDocumentID = myClosetUser.documentID
-            destination.currentUserDocumentID = currentUserDocumentID
+            destination.currentUser = myClosetUser
         } else {
+            // Add segue data passed for OutfitCreatorViewController here "ShowOutfitPlanner"
             return
         }
     }

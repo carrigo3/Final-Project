@@ -16,7 +16,7 @@ class ClosetViewController: UIViewController {
     let minHeight: CGFloat = 100
     
     var cellSpacingHeight: CGFloat = 15
-    var currentUserDocumentID: String!
+    var currentUser: MyClosetUser!
     var clothesItems: ClothesItems!
     var currentClothesItemsArray = [ClothesItem]()
     
@@ -29,8 +29,11 @@ class ClosetViewController: UIViewController {
         navigationController?.isToolbarHidden = true
         view.backgroundColor?.withAlphaComponent(0.5)
         clothesItems = ClothesItems()
-        clothesItems.loadData(currentDocumentID: currentUserDocumentID) {
-            print("***DATA LOADEDDDDDDD")
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        clothesItems.loadData(currentUser: currentUser) {
+            print("*** DATA LOADED")
             self.currentClothesItemsArray = self.clothesItems.clothesItemsArray
             self.tableView.reloadData()
         }
@@ -41,13 +44,12 @@ class ClosetViewController: UIViewController {
         switch segue.identifier ?? "" {
         case "AddNewItem" :
             let destination = segue.destination as! AddNewItemViewController
-            let currentDocumentID = currentUserDocumentID
-            destination.currentDocumentID = currentDocumentID
+            destination.currentUser = currentUser
         case "ShowClothesItem" :
-            print("ShowClothesItem segue executed")
             let destination = segue.destination as! ClothesItemDetailViewController
             let selectedIndexPath = tableView.indexPathForSelectedRow!
             destination.clothesItem = clothesItems.clothesItemsArray[selectedIndexPath.section]
+            destination.currentUser = currentUser
         default :
             print("*** ERROR: Did not have a segue in ClosetViewController prepare(for segue:)")
         }
